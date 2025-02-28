@@ -125,4 +125,8 @@
     <ItemGroup>
       <None Remove="UI\BSML\ThisSongSucksSettingsView.bsml" />
     </ItemGroup>
+    <ItemGroup>
+      <None Remove="UI\BSML\SettingsView.bsml" />
+      <EmbeddedResource Include="UI\BSML\SettingsView.bsml" />
+    </ItemGroup>
 </Project>
