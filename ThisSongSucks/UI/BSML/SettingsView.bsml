@@ -1,3 +1,6 @@
-﻿<scrollable-settings-container>
-    <bool-setting text="Enabled" value="modEnabled"/>
-</scrollable-settings-container>
+﻿<bg xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+    xsi:noNamespaceSchemaLocation='https://monkeymanboy.github.io/BSML-Docs/BSMLSchema.xsd'>
+    <scrollable-settings-container>
+        <bool-setting text="Enabled" value="modEnabled"/>
+    </scrollable-settings-container>
+</bg>
