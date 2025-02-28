@@ -7,7 +7,6 @@ namespace ThisSongSucks.Censor
     public class SongMuter : IInitializable, IDisposable
     {
         [Inject] private readonly GameSongController _songController = null;
-        [Inject] private readonly PluginConfig _config = null;
         
         public void Initialize()
         {

@@ -1,25 +1,28 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Bela Varga\\RiderProjects\\yeah\\ThisSongSucks\\ThisSongSucks.csproj": {}
+    "C:\\Users\\Bela Varga\\RiderProjects\\ThisSongSucks\\ThisSongSucks\\ThisSongSucks.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Bela Varga\\RiderProjects\\yeah\\ThisSongSucks\\ThisSongSucks.csproj": {
+    "C:\\Users\\Bela Varga\\RiderProjects\\ThisSongSucks\\ThisSongSucks\\ThisSongSucks.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Bela Varga\\RiderProjects\\yeah\\ThisSongSucks\\ThisSongSucks.csproj",
+        "projectUniqueName": "C:\\Users\\Bela Varga\\RiderProjects\\ThisSongSucks\\ThisSongSucks\\ThisSongSucks.csproj",
         "projectName": "ThisSongSucks",
-        "projectPath": "C:\\Users\\Bela Varga\\RiderProjects\\yeah\\ThisSongSucks\\ThisSongSucks.csproj",
+        "projectPath": "C:\\Users\\Bela Varga\\RiderProjects\\ThisSongSucks\\ThisSongSucks\\ThisSongSucks.csproj",
         "packagesPath": "C:\\Users\\Bela Varga\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Bela Varga\\RiderProjects\\yeah\\ThisSongSucks\\obj\\",
+        "outputPath": "C:\\Users\\Bela Varga\\RiderProjects\\ThisSongSucks\\ThisSongSucks\\obj\\",
         "projectStyle": "PackageReference",
+        "UsingMicrosoftNETSdk": false,
         "configFilePaths": [
-          "C:\\Users\\Bela Varga\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Bela Varga\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net472"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -32,13 +35,7 @@
           "warnAsError": [
             "NU1605"
           ]
-        },
-        "restoreAuditProperties": {
-          "enableAudit": "true",
-          "auditLevel": "low",
-          "auditMode": "all"
-        },
-        "SdkAnalysisLevel": "9.0.100"
+        }
       },
       "frameworks": {
         "net472": {
@@ -50,14 +47,14 @@
               "target": "Package",
               "version": "[1.4.2, )"
             },
-            "Microsoft.NETFramework.ReferenceAssemblies": {
+            "BepInEx.AssemblyPublicizer.MSBuild": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[1.0.3, )",
-              "autoReferenced": true
+              "version": "[0.4.3, )"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Users\\Bela Varga\\.dotnet\\sdk\\9.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.111\\RuntimeIdentifierGraph.json"
         }
       }
     }

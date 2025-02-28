@@ -1,15 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "Fd4dVf9iUfY=",
+  "dgSpecHash": "JPeTmoIUxzU=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Bela Varga\\RiderProjects\\yeah\\ThisSongSucks\\ThisSongSucks.csproj",
+  "projectFilePath": "C:\\Users\\Bela Varga\\RiderProjects\\ThisSongSucks\\ThisSongSucks\\ThisSongSucks.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Bela Varga\\.nuget\\packages\\beatsabermoddingtools.tasks\\1.4.2\\beatsabermoddingtools.tasks.1.4.2.nupkg.sha512",
+    "C:\\Users\\Bela Varga\\.nuget\\packages\\bepinex.assemblypublicizer.msbuild\\0.4.3\\bepinex.assemblypublicizer.msbuild.0.4.3.nupkg.sha512",
     "C:\\Users\\Bela Varga\\.nuget\\packages\\microsoft.build.framework\\16.5.0\\microsoft.build.framework.16.5.0.nupkg.sha512",
     "C:\\Users\\Bela Varga\\.nuget\\packages\\microsoft.build.tasks.core\\16.5.0\\microsoft.build.tasks.core.16.5.0.nupkg.sha512",
     "C:\\Users\\Bela Varga\\.nuget\\packages\\microsoft.build.utilities.core\\16.5.0\\microsoft.build.utilities.core.16.5.0.nupkg.sha512",
-    "C:\\Users\\Bela Varga\\.nuget\\packages\\microsoft.netframework.referenceassemblies\\1.0.3\\microsoft.netframework.referenceassemblies.1.0.3.nupkg.sha512",
-    "C:\\Users\\Bela Varga\\.nuget\\packages\\microsoft.netframework.referenceassemblies.net472\\1.0.3\\microsoft.netframework.referenceassemblies.net472.1.0.3.nupkg.sha512",
     "C:\\Users\\Bela Varga\\.nuget\\packages\\microsoft.visualstudio.setup.configuration.interop\\1.16.30\\microsoft.visualstudio.setup.configuration.interop.1.16.30.nupkg.sha512",
     "C:\\Users\\Bela Varga\\.nuget\\packages\\system.buffers\\4.4.0\\system.buffers.4.4.0.nupkg.sha512",
     "C:\\Users\\Bela Varga\\.nuget\\packages\\system.collections.immutable\\1.5.0\\system.collections.immutable.1.5.0.nupkg.sha512",

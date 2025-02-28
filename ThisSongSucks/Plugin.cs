@@ -24,6 +24,9 @@ namespace ThisSongSucks
             zenjector.UseLogger(logger);
             zenjector.UseMetadataBinder<Plugin>();
             
-            zenjector.Install<AppInstaller>(Location.App, config.Generated<PluginConfig>()); }
+            zenjector.Install<AppInstaller>(Location.App, config.Generated<PluginConfig>()); 
+            zenjector.Install<MenuInstaller>(Location.Menu);
+            zenjector.Install<GameInstaller>(Location.StandardPlayer);
+        }
     }
 }

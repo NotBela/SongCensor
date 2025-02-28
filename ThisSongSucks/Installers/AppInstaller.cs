@@ -1,3 +1,4 @@
+using IPA.Loader;
 using ThisSongSucks.Configuration;
 using Zenject;
 
@@ -15,6 +16,7 @@ namespace ThisSongSucks.Installers
         public override void InstallBindings()
         {
             Container.BindInstance(_config);
+            Container.BindInterfacesAndSelfTo<CensoredSongManager>().AsSingle();
         }
     }
 }
