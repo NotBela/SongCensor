@@ -8,6 +8,7 @@ namespace ThisSongSucks.Censor
     public class SongMuter : IInitializable, IDisposable
     {
         [Inject] private readonly GameSongController gameSongController = null;
+        [Inject] private readonly PluginConfig _config = null;
         
         public void Initialize()
         {
@@ -16,6 +17,9 @@ namespace ThisSongSucks.Censor
 
         private void songStartedEvent()
         {
+            if (!_config.censoredSongs.Contains("replace this with level id"))
+                return;
+            
             gameSongController._audioTimeSyncController._audioSource.mute = true;
         }
 
