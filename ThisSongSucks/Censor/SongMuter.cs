@@ -1,4 +1,5 @@
 ﻿using System;
+using IPA.Loader;
 using ThisSongSucks.Configuration;
 using Zenject;
 
@@ -6,21 +7,21 @@ namespace ThisSongSucks.Censor
 {
     public class SongMuter : IInitializable, IDisposable
     {
-        [Inject] private readonly GameSongController _songController = null;
+        [Inject] private readonly GameSongController gameSongController = null;
         
         public void Initialize()
         {
-            _songController.songDidStartEvent += onSongStart;
+            gameSongController.songDidStartEvent += songStartedEvent;
         }
 
-        private void onSongStart()
+        private void songStartedEvent()
         {
-            _songController.PauseSong();
+            gameSongController._audioTimeSyncController._audioSource.mute = true;
         }
 
         public void Dispose()
         {
-            _songController.songDidStartEvent -= onSongStart;
+            gameSongController.songDidStartEvent -= songStartedEvent;
         }
     }
 }
