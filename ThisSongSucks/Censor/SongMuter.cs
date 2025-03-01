@@ -17,7 +17,7 @@ namespace ThisSongSucks.Censor
 
         private void songStartedEvent()
         {
-            if (!_config.censoredSongs.Contains("replace this with level id"))
+            if (!_config.censoredSongs.Contains("replace this with level id")) // TODO: do this
                 return;
             
             gameSongController._audioTimeSyncController._audioSource.mute = true;
