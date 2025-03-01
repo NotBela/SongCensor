@@ -13,6 +13,7 @@ namespace ThisSongSucks.Installers
             Container.BindInterfacesAndSelfTo<SongPreviewMuterPatch>().AsSingle();
             Container.BindInterfacesAndSelfTo<SettingsViewController>().FromNewComponentAsViewController().AsSingle();
             Container.BindInterfacesAndSelfTo<CensorListViewController>().FromNewComponentAsViewController().AsSingle();
+            Container.BindInterfacesAndSelfTo<CoverArtBlur>().AsSingle();
         }
     }
 }

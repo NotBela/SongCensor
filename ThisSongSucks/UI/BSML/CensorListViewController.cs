@@ -15,7 +15,7 @@ namespace ThisSongSucks.UI.Controllers
         [Inject] private readonly PluginConfig _config = null;
         [Inject] private readonly LevelCollectionViewController _levelCollectionViewController = null;
         
-        private BeatmapLevel _currentLevel = null;
+        private BeatmapLevel _currentLevel;
         
         [UIComponent("enableSongNameCensoring")]
         private readonly ToggleSetting _enableSongNameCensoringToggle = null;
