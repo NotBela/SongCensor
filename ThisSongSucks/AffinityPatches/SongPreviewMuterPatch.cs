@@ -1,4 +1,7 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using IPA.Logging;
+using IPA.Utilities;
 using SiraUtil.Affinity;
 using SiraUtil.Logging;
 using ThisSongSucks.Censor;
@@ -10,17 +13,16 @@ namespace ThisSongSucks.AffinityPatches
     public class SongPreviewMuterPatch : IAffinity
     {
         [Inject] private readonly PluginConfig _config = null;
-        [Inject] private readonly CensoredSongManager _censoredSongManager = null;
-        [Inject] private readonly SongPreviewPlayer _songPreviewPlayer = null;
+        [Inject] private readonly SiraLog _siraLog = null;
 
         [AffinityPrefix]
-        [AffinityPatch(typeof(LevelCollectionViewController), "SongPlayerCrossfadeToLevelAsync")]
-        private bool PrefixPatch(BeatmapLevel level)
+        [AffinityPatch(typeof(LevelCollectionViewController), nameof(LevelCollectionViewController.SongPlayerCrossfadeToLevel))]
+        private bool PrefixPatch(LevelCollectionViewController __instance, BeatmapLevel level)
         {
             if (!_config.Enabled) return true;
-            if (_censoredSongManager.CensoredSongs.Contains(new CensoredSong(level))) return true;
-            
-            _songPreviewPlayer.CrossfadeToDefault();
+            if (!_config.censoredSongs.Contains(level.levelID)) return true;
+
+            __instance._songPreviewPlayer.PauseCurrentChannel();
             return false;
         }
     }

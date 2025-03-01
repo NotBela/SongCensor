@@ -1,6 +1,8 @@
 ﻿<bg xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
     xsi:noNamespaceSchemaLocation='https://monkeymanboy.github.io/BSML-Docs/BSMLSchema.xsd'>
     <vertical>
-        <text text="hi"/>
+        <bool-setting bind-value="true" id="enableSongCensoring" apply-on-change="true" text="Censor Song" value="enableSongCensoringValue"/>
+        <bool-setting bind-value="true" id="enableCoverArtCensoring" apply-on-change="true" text="Censor Cover Art" value="enableCoverArtCensoringValue"/>
+        <bool-setting bind-value="true" id="enableSongNameCensoring" apply-on-change="true" text="Censor Song Name" value="enableSongNameCensoringValue"/>
     </vertical>
 </bg>
