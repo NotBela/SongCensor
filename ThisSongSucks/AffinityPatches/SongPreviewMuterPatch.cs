@@ -13,7 +13,6 @@ namespace ThisSongSucks.AffinityPatches
     public class SongPreviewMuterPatch : IAffinity
     {
         [Inject] private readonly PluginConfig _config = null;
-        [Inject] private readonly SiraLog _siraLog = null;
 
         [AffinityPrefix]
         [AffinityPatch(typeof(LevelCollectionViewController), nameof(LevelCollectionViewController.SongPlayerCrossfadeToLevel))]

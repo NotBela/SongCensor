@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCopyrightAttribute("Copyright © $ModAuthor$")]
 [assembly: System.Reflection.AssemblyDescriptionAttribute("$ModDesc$")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8558d36230f712c743812882538fed553ede2bd6")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+453fa6d5de5dc5c804e1dc7bbe8274ba893b6924")]
 [assembly: System.Reflection.AssemblyProductAttribute("ThisSongSucks")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ThisSongSucks")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

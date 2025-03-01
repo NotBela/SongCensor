@@ -26,6 +26,8 @@ namespace ThisSongSucks.UI.Controllers
         [UIComponent("enableCoverArtCensoring")]
         private readonly ToggleSetting _enableCoverArtCensoringToggle = null;
 
+        // TODO: fix bug where you cannot disable any censor prefrences for the song
+        
         [UIValue("enableSongCensoringValue")]
         private bool enableSongCensoring
         {
@@ -41,11 +43,10 @@ namespace ThisSongSucks.UI.Controllers
                     _config.censoredSongs.Add(_currentLevel.levelID);
                     return;
                 }
-                if (_config.censoredSongs.Contains(_currentLevel.levelID)) 
-                    _config.censoredSongs.Remove(_currentLevel.levelID);
+                _config.censoredSongs.Remove(_currentLevel.levelID);
             }
         }
-
+        
         [UIValue("enableCoverArtCensoringValue")]
         private bool enableCoverArtCensoring
         {
@@ -61,8 +62,7 @@ namespace ThisSongSucks.UI.Controllers
                     _config.censoredCoverArt.Add(_currentLevel.levelID);
                     return;
                 }
-                if (_config.censoredCoverArt.Contains(_currentLevel.levelID)) 
-                    _config.censoredCoverArt.Remove(_currentLevel.levelID);
+                _config.censoredCoverArt.Remove(_currentLevel.levelID);
             }
         }
 
@@ -81,8 +81,7 @@ namespace ThisSongSucks.UI.Controllers
                     _config.censoredSongNames.Add(_currentLevel.levelID);
                     return;
                 }
-                if (_config.censoredSongNames.Contains(_currentLevel.levelID)) 
-                    _config.censoredSongNames.Remove(_currentLevel.levelID);
+                _config.censoredSongNames.Remove(_currentLevel.levelID);
             }
         }
 
@@ -93,7 +92,7 @@ namespace ThisSongSucks.UI.Controllers
             _enableSongNameCensoringToggle.Interactable = true;
             
             _currentLevel = beatmapLevel;
-            NotifyPropertyChanged();
+            NotifyPropertyChanged(null);
         }
         
         public void Initialize()
