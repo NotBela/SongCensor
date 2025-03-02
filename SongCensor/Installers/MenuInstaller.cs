@@ -10,8 +10,12 @@ namespace SongCensor.Installers
     {
         public override void InstallBindings()
         {
-            Container.BindInterfacesAndSelfTo<SongPreviewMuterPatch>().AsSingle();
             Container.BindInterfacesAndSelfTo<SettingsViewController>().FromNewComponentAsViewController().AsSingle();
+
+            if (!Container.Resolve<PluginConfig>().Enabled)
+                return;
+            
+            Container.BindInterfacesAndSelfTo<SongPreviewMuterPatch>().AsSingle();
             Container.BindInterfacesAndSelfTo<CensorListViewController>().FromNewComponentAsViewController().AsSingle();
             Container.BindInterfacesAndSelfTo<CoverArtBlur>().AsSingle();
         }
