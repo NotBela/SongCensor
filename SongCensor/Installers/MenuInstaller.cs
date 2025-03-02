@@ -1,7 +1,7 @@
 ﻿using SongCensor.AffinityPatches;
 using SongCensor.Censor;
 using SongCensor.Configuration;
-using SongCensor.UI.Controllers;
+using SongCensor.UI.BSML;
 using Zenject;
 
 namespace SongCensor.Installers

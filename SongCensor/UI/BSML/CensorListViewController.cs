@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using BeatSaberMarkupLanguage.Attributes;
 using BeatSaberMarkupLanguage.Components.Settings;
 using BeatSaberMarkupLanguage.GameplaySetup;
@@ -7,7 +6,7 @@ using BeatSaberMarkupLanguage.ViewControllers;
 using SongCensor.Configuration;
 using Zenject;
 
-namespace SongCensor.UI.Controllers
+namespace SongCensor.UI.BSML
 {
     public class CensorListViewController : BSMLAutomaticViewController, IInitializable, IDisposable
     {
