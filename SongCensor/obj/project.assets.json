@@ -614,11 +614,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Bela Varga\\RiderProjects\\ThisSongSucks\\SongCensor\\SongCensor.csproj",
+      "projectUniqueName": "C:\\Users\\Bela Varga\\RiderProjects\\SongCensor\\SongCensor\\SongCensor.csproj",
       "projectName": "SongCensor",
-      "projectPath": "C:\\Users\\Bela Varga\\RiderProjects\\ThisSongSucks\\SongCensor\\SongCensor.csproj",
+      "projectPath": "C:\\Users\\Bela Varga\\RiderProjects\\SongCensor\\SongCensor\\SongCensor.csproj",
       "packagesPath": "C:\\Users\\Bela Varga\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Bela Varga\\RiderProjects\\ThisSongSucks\\SongCensor\\obj\\",
+      "outputPath": "C:\\Users\\Bela Varga\\RiderProjects\\SongCensor\\SongCensor\\obj\\",
       "projectStyle": "PackageReference",
       "UsingMicrosoftNETSdk": false,
       "configFilePaths": [

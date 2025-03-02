@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "BNKwKt6kbIE=",
+  "dgSpecHash": "AXXfM0Qt18I=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Bela Varga\\RiderProjects\\ThisSongSucks\\SongCensor\\SongCensor.csproj",
+  "projectFilePath": "C:\\Users\\Bela Varga\\RiderProjects\\SongCensor\\SongCensor\\SongCensor.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Bela Varga\\.nuget\\packages\\beatsabermoddingtools.tasks\\1.4.2\\beatsabermoddingtools.tasks.1.4.2.nupkg.sha512",
     "C:\\Users\\Bela Varga\\.nuget\\packages\\bepinex.assemblypublicizer.msbuild\\0.4.3\\bepinex.assemblypublicizer.msbuild.0.4.3.nupkg.sha512",

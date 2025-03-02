@@ -5,7 +5,7 @@ using BeatSaberMarkupLanguage.ViewControllers;
 using SongCensor.Configuration;
 using Zenject;
 
-namespace SongCensor.UI.Controllers
+namespace SongCensor.UI.BSML
 {
     internal class SettingsViewController : BSMLAutomaticViewController, IInitializable, IDisposable
     {

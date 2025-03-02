@@ -9,6 +9,7 @@ namespace SongCensor.Censor
     {
         [Inject] private readonly GameSongController gameSongController = null;
         [Inject] private readonly PluginConfig _config = null;
+        [Inject] private readonly GameplayCoreSceneSetupData _gameCoreSceneSetupData = null;
         
         public void Initialize()
         {
@@ -17,7 +18,7 @@ namespace SongCensor.Censor
 
         private void songStartedEvent()
         {
-            if (!_config.censoredSongs.Contains("replace this with level id")) // TODO: do this
+            if (!_config.censoredSongs.Contains(_gameCoreSceneSetupData.beatmapLevel.levelID))
                 return;
             
             gameSongController._audioTimeSyncController._audioSource.mute = true;
