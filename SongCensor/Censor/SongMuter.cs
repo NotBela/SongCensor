@@ -7,13 +7,13 @@ namespace SongCensor.Censor
 {
     public class SongMuter : IInitializable, IDisposable
     {
-        [Inject] private readonly GameSongController gameSongController = null;
+        [Inject] private readonly GameSongController _gameSongController = null;
         [Inject] private readonly PluginConfig _config = null;
         [Inject] private readonly GameplayCoreSceneSetupData _gameCoreSceneSetupData = null;
         
         public void Initialize()
         {
-            gameSongController.songDidStartEvent += songStartedEvent;
+            _gameSongController.songDidStartEvent += songStartedEvent;
         }
 
         private void songStartedEvent()
@@ -21,12 +21,12 @@ namespace SongCensor.Censor
             if (!_config.CensoredSongs[_gameCoreSceneSetupData.beatmapLevel.levelID].censorSong)
                 return;
             
-            gameSongController._audioTimeSyncController._audioSource.mute = true;
+            _gameSongController._audioTimeSyncController._audioSource.mute = true;
         }
 
         public void Dispose()
         {
-            gameSongController.songDidStartEvent -= songStartedEvent;
+            _gameSongController.songDidStartEvent -= songStartedEvent;
         }
     }
 }
