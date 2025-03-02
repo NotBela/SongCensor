@@ -1,9 +1,13 @@
 ﻿using System;
+using System.Linq;
 using BeatSaberMarkupLanguage.Attributes;
+using BeatSaberMarkupLanguage.Components;
 using BeatSaberMarkupLanguage.Components.Settings;
 using BeatSaberMarkupLanguage.GameplaySetup;
+using BeatSaberMarkupLanguage.Tags;
 using BeatSaberMarkupLanguage.ViewControllers;
 using SongCensor.Configuration;
+using SongCore;
 using Zenject;
 
 namespace SongCensor.UI.BSML
@@ -14,81 +18,22 @@ namespace SongCensor.UI.BSML
         [Inject] private readonly LevelCollectionViewController _levelCollectionViewController = null;
         
         private BeatmapLevel _currentLevel;
-        
-        [UIComponent("enableSongNameCensoring")]
-        private readonly ToggleSetting _enableSongNameCensoringToggle = null;
-        
-        [UIComponent("enableSongCensoring")]
-        private readonly ToggleSetting _enableSongCensoringToggle = null;
-        
-        [UIComponent("enableCoverArtCensoring")]
-        private readonly ToggleSetting _enableCoverArtCensoringToggle = null;
 
-        // TODO: fix bug where you cannot disable any censor prefrences for the song
-        
-        [UIValue("enableSongCensoringValue")]
-        private bool enableSongCensoring
+        [UIComponent("censorList")] 
+        private readonly CustomListTableData _censorList = null;
+
+        [UIAction("#post-parse")]
+        void PostParse()
         {
-            get
-            {
-                if (_currentLevel == null) return false;
-                return _config.censoredSongs.Contains(_currentLevel.levelID);
-            }
-            set
-            {
-                if (value)
-                {
-                    _config.censoredSongs.Add(_currentLevel.levelID);
-                    return;
-                }
-                _config.censoredSongs.Remove(_currentLevel.levelID);
-            }
-        }
-        
-        [UIValue("enableCoverArtCensoringValue")]
-        private bool enableCoverArtCensoring
-        {
-            get
-            {
-                if (_currentLevel == null) return false;
-                return _config.censoredCoverArt.Contains(_currentLevel.levelID);
-            }
-            set
-            {
-                if (value)
-                {
-                    _config.censoredCoverArt.Add(_currentLevel.levelID);
-                    return;
-                }
-                _config.censoredCoverArt.Remove(_currentLevel.levelID);
-            }
+            _censorList.Data = _config.CensoredSongs.Keys.Select(i => getCellInfo(Loader.GetLevelById(i))).ToList();
+            _censorList.TableView.ReloadData();
         }
 
-        [UIValue("enableSongNameCensoringValue")]
-        private bool enableSongNameCensoring
-        {
-            get
-            {
-                if (_currentLevel == null) return false;
-                return _config.censoredSongNames.Contains(_currentLevel.levelID);
-            }
-            set
-            {
-                if (value)
-                {
-                    _config.censoredSongNames.Add(_currentLevel.levelID);
-                    return;
-                }
-                _config.censoredSongNames.Remove(_currentLevel.levelID);
-            }
-        }
-
+        private CustomListTableData.CustomCellInfo getCellInfo(BeatmapLevel level) =>
+            new CustomListTableData.CustomCellInfo(level.songName, level.songAuthorName);
+        
         private void onSongSelected(LevelCollectionViewController _, BeatmapLevel beatmapLevel)
         {
-            _enableSongCensoringToggle.Interactable = true;
-            _enableCoverArtCensoringToggle.Interactable = true;
-            _enableSongNameCensoringToggle.Interactable = true;
-            
             _currentLevel = beatmapLevel;
             NotifyPropertyChanged(null);
         }
@@ -96,26 +41,13 @@ namespace SongCensor.UI.BSML
         public void Initialize()
         {
             _levelCollectionViewController.didSelectLevelEvent += onSongSelected;
-            _levelCollectionViewController.didSelectHeaderEvent += onHeaderSelected;
-            
             GameplaySetup.Instance.AddTab("SongCensor", "SongCensor.UI.BSML.CensorListView.bsml", this);
         }
 
         public void Dispose()
         {
             _levelCollectionViewController.didSelectLevelEvent -= onSongSelected;
-            _levelCollectionViewController.didSelectHeaderEvent -= onHeaderSelected;
-            
             GameplaySetup.Instance.RemoveTab("SongCensor");
-        }
-
-        private void onHeaderSelected(LevelCollectionViewController _)
-        {
-            _enableSongCensoringToggle.Interactable = false;
-            _enableCoverArtCensoringToggle.Interactable = false;
-            _enableSongNameCensoringToggle.Interactable = false;
-            
-            _currentLevel = null;
         }
     }
 }

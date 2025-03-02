@@ -18,7 +18,7 @@ namespace SongCensor.Censor
 
         private void songStartedEvent()
         {
-            if (!_config.censoredSongs.Contains(_gameCoreSceneSetupData.beatmapLevel.levelID))
+            if (!_config.CensoredSongs[_gameCoreSceneSetupData.beatmapLevel.levelID].censorSong)
                 return;
             
             gameSongController._audioTimeSyncController._audioSource.mute = true;

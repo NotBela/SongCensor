@@ -19,7 +19,7 @@ namespace SongCensor.AffinityPatches
         private bool PrefixPatch(LevelCollectionViewController __instance, BeatmapLevel level)
         {
             if (!_config.Enabled) return true;
-            if (!_config.censoredSongs.Contains(level.levelID)) return true;
+            if (!_config.CensoredSongs[level.levelID].censorSong) return true;
 
             __instance._songPreviewPlayer.PauseCurrentChannel();
             return false;
