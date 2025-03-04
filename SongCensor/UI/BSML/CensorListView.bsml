@@ -4,5 +4,29 @@
         <vertical bg="panel-top">
             <list align-to-center="true" select-cell="censorListCell" id="censorList" visible-cells="7" list-style="Box" show-scrollbar="true"/>
         </vertical>
+        <horizontal spacing="5">
+            <button id="addButton" on-click="addButtonOnClick" text="Add..."/>
+            <button id="removeButton" on-click="removeButtonOnClick" text="Remove..."/>
+            <button id="editButton" on-click="editButtonOnClick" text="Edit..."/>
+        </horizontal>
     </vertical>
+    
+    <modal size-delta-y="50" size-delta-x="30" move-to-center="true" show-event="mapListModalShow" hide-event="mapListModalHide" click-off-closes="true">
+        <vertical bg="round-rect-panel">
+            <list show-scrollbar="true" id="mapListCustomMapList" select-cell="onMapListCellSelect" align-to-center="true" visible-cells="7"/>
+        </vertical>
+    </modal>
+    
+    <modal click-off-closes="true" move-to-center="true" hide-event="editModalHide" size-delta-x="50" size-delta-y="50" show-event="editModalShow">
+        <vertical bg="round-rect-panel">
+            <horizontal pad-bottom="5" spacing="2">
+                <text text="Censored Map"/>
+                <list show-scrollbar="false" id="chosenMapToFilter" visible-cells="1" select-cell="onChosenMapToFilterSelected"/>
+            </horizontal>
+            <bool-setting text="Censor Song" bind-value="true" value="editModalCensorSongValue"/>
+            <bool-setting text="Censor Cover Art" bind-value="true" value="editModalCensorCoverArtValue"/>
+            <bool-setting text="Censor Song Name" bind-value="true" value="editModalCensorSongNameValue"/>
+            <button text="Close" on-click="editModalCloseButtonOnClick"/>
+        </vertical>
+    </modal>
 </bg>

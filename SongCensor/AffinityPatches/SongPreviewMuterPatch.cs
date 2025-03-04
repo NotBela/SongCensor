@@ -20,7 +20,7 @@ namespace SongCensor.AffinityPatches
         {
             if (!_config.CensoredSongs[level.levelID].censorSong) return true;
 
-            __instance._songPreviewPlayer.PauseCurrentChannel();
+            __instance._songPreviewPlayer.CrossfadeToDefault();
             return false;
         }
     }
