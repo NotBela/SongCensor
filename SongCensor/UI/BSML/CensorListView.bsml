@@ -25,7 +25,6 @@
             </horizontal>
             <bool-setting text="Censor Song" bind-value="true" value="editModalCensorSongValue"/>
             <bool-setting text="Censor Cover Art" bind-value="true" value="editModalCensorCoverArtValue"/>
-            <bool-setting text="Censor Song Name" bind-value="true" value="editModalCensorSongNameValue"/>
             <horizontal spacing="5">
                 <primary-button text="Save" on-click="editModalSaveButtonOnClick"/>
                 <button text="Close" on-click="editModalCloseButtonOnClick"/>
