@@ -35,17 +35,17 @@ namespace SongCensor.UI.BSML
         [UIComponent("editButton")]
         private readonly Button _editButton = null;
         
-        private KeyValuePair<string, (bool, bool, bool)> _currentlySelectedMap = new KeyValuePair<string, (bool, bool, bool)>(String.Empty, (true, false, false));
+        private KeyValuePair<string, (bool, bool)> _currentlySelectedMap = new KeyValuePair<string, (bool, bool)>(String.Empty, (true, false));
 
-        private int _currentlySelectedCensoredMapIndex = 0;
+        private int _currentlySelectedCensoredMapIndex = -1;
         
         [UIValue("editModalCensorSongValue")]
         private bool _censorSongValue
         {
             get => _currentlySelectedMap.Value.Item1;
-            set => _currentlySelectedMap = new KeyValuePair<string, (bool, bool, bool)>(
+            set => _currentlySelectedMap = new KeyValuePair<string, (bool, bool)>(
                 _currentlySelectedMap.Key,
-                (value, _currentlySelectedMap.Value.Item2, _currentlySelectedMap.Value.Item3)
+                (value, _currentlySelectedMap.Value.Item2)
             );
         }
         
@@ -53,19 +53,9 @@ namespace SongCensor.UI.BSML
         private bool _censorCoverArtValue
         {
             get => _currentlySelectedMap.Value.Item2;
-            set => _currentlySelectedMap = new KeyValuePair<string, (bool, bool, bool)>(
+            set => _currentlySelectedMap = new KeyValuePair<string, (bool, bool)>(
                 _currentlySelectedMap.Key,
-                (_currentlySelectedMap.Value.Item1, value, _currentlySelectedMap.Value.Item3)
-            );
-        }
-        
-        [UIValue("editModalCensorSongNameValue")]
-        private bool _censorSongNameValue
-        {
-            get => _currentlySelectedMap.Value.Item3;
-            set => _currentlySelectedMap = new KeyValuePair<string, (bool, bool, bool)>(
-                _currentlySelectedMap.Key,
-                (_currentlySelectedMap.Value.Item1, _currentlySelectedMap.Value.Item2, value)
+                (_currentlySelectedMap.Value.Item1, value)
             );
         }
 
@@ -74,7 +64,6 @@ namespace SongCensor.UI.BSML
         {
             _mapList.Data = Loader.CustomLevels.Values.Select(GetCustomCellInfo).ToList();
             _mapList.TableView.ReloadData();
-            Plugin.Log.Info(_mapList.Data.Count.ToString());
 
             _editButton.interactable = false;
             _removeButton.interactable = false;
@@ -87,10 +76,28 @@ namespace SongCensor.UI.BSML
             _chosenMapToFilter.TableView.ReloadData();
         }
 
+        [UIAction("removeButtonOnClick")]
+        private void RemoveButtonOnClick()
+        {
+            if (_currentlySelectedCensoredMapIndex == -1 || 
+                _config.CensoredSongs.Count >= _currentlySelectedCensoredMapIndex)
+                return;
+            
+            _censorList.TableView.ClearSelection();
+            _config.CensoredSongs.Remove(_config.CensoredSongs.ElementAt(_currentlySelectedCensoredMapIndex).Key);
+            _censorList.Data.RemoveAt(_currentlySelectedCensoredMapIndex);
+            _censorList.TableView.ReloadData();
+            
+            ResetCensorListSelection();
+        }
+
         [UIAction("censorListCell")]
         private void censorListCellOnSelect(TableView tableView, int cell)
         {
             _currentlySelectedCensoredMapIndex = cell;
+            
+            _editButton.interactable = true;
+            _removeButton.interactable = true;
         }
 
         [UIAction("addButtonOnClick")]
@@ -131,7 +138,7 @@ namespace SongCensor.UI.BSML
         {
             var beatmap = Loader.CustomLevels.ElementAt(cell).Value;
             tableView.ClearSelection();
-            _currentlySelectedMap = new KeyValuePair<string, (bool, bool, bool)>(beatmap.levelID, _currentlySelectedMap.Value);
+            _currentlySelectedMap = new KeyValuePair<string, (bool, bool)>(beatmap.levelID, _currentlySelectedMap.Value);
             _chosenMapToFilter.Data = new List<CustomListTableData.CustomCellInfo>()
             {
                 GetCustomCellInfo(beatmap)
@@ -142,6 +149,29 @@ namespace SongCensor.UI.BSML
         
         [UIAction("editModalCloseButtonOnClick")]
         private void editModalCloseButtonOnClick() => _parserParams.EmitEvent("editModalHide");
+
+        [UIAction("editModalSaveButtonOnClick")]
+        private void editModalSaveButtonOnClick()
+        {
+            if (_config.CensoredSongs.ContainsKey(_currentlySelectedMap.Key))
+                _config.CensoredSongs.Remove(_currentlySelectedMap.Key);
+            
+            _config.CensoredSongs.Add(_currentlySelectedMap.Key, _currentlySelectedMap.Value);
+            _currentlySelectedMap = new KeyValuePair<string, (bool, bool)>(String.Empty, (true, false));
+            
+            ResetCensorListSelection();
+            ReloadCensorList();
+            NotifyPropertyChanged(null);
+        }
+
+        private void ResetCensorListSelection()
+        {
+            _editButton.interactable = false;
+            _removeButton.interactable = false;
+            _currentlySelectedCensoredMapIndex = -1;
+            
+            _censorList.TableView.ClearSelection();
+        }
         
         private CustomListTableData.CustomCellInfo GetCustomCellInfo(BeatmapLevel level) => new CustomListTableData.CustomCellInfo(level.songName, level.songAuthorName);
 

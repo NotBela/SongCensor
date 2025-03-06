@@ -15,7 +15,7 @@ namespace SongCensor.Configuration
         public virtual bool Enabled { get; set; } = true;
         
         [UseConverter(typeof(DictionaryConverter<string>))]
-        public virtual Dictionary<string, (bool censorSong, bool censorArt, bool censorSongName)> CensoredSongs { get; set; } = new Dictionary<string, (bool censorSong, bool censorArt, bool censorSongName)>();
+        public virtual Dictionary<string, (bool censorSong, bool censorArt)> CensoredSongs { get; set; } = new Dictionary<string, (bool censorSong, bool censorArt)>();
 
         public void ChangeCensorDictionaryValue(string key, CensorTypes valueToChange, bool value)
         {
@@ -27,9 +27,6 @@ namespace SongCensor.Configuration
                     break;
                 case CensorTypes.CoverArt:
                     keyValuePair.censorArt = value;
-                    break;
-                case CensorTypes.SongName:
-                    keyValuePair.censorSongName = value;
                     break;
             }
             CensoredSongs[key] = keyValuePair;

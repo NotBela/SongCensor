@@ -11,7 +11,7 @@
         </horizontal>
     </vertical>
     
-    <modal size-delta-y="50" size-delta-x="30" move-to-center="true" show-event="mapListModalShow" hide-event="mapListModalHide" click-off-closes="true">
+    <modal size-delta-y="50" size-delta-x="50" move-to-center="true" show-event="mapListModalShow" hide-event="mapListModalHide" click-off-closes="true">
         <vertical bg="round-rect-panel">
             <list show-scrollbar="true" id="mapListCustomMapList" select-cell="onMapListCellSelect" align-to-center="true" visible-cells="7"/>
         </vertical>
@@ -26,7 +26,10 @@
             <bool-setting text="Censor Song" bind-value="true" value="editModalCensorSongValue"/>
             <bool-setting text="Censor Cover Art" bind-value="true" value="editModalCensorCoverArtValue"/>
             <bool-setting text="Censor Song Name" bind-value="true" value="editModalCensorSongNameValue"/>
-            <button text="Close" on-click="editModalCloseButtonOnClick"/>
+            <horizontal spacing="5">
+                <primary-button text="Save" on-click="editModalSaveButtonOnClick"/>
+                <button text="Close" on-click="editModalCloseButtonOnClick"/>
+            </horizontal>
         </vertical>
     </modal>
 </bg>
