@@ -1,7 +1,7 @@
 ﻿<bg xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
     xsi:noNamespaceSchemaLocation='https://monkeymanboy.github.io/BSML-Docs/BSMLSchema.xsd'>
     <vertical>
-        <vertical bg="panel-top">
+        <vertical bg="round-rect-panel">
             <list align-to-center="true" select-cell="censorListCell" id="censorList" visible-cells="7" show-scrollbar="true" list-style="Simple"/>
         </vertical>
         <horizontal spacing="5">
