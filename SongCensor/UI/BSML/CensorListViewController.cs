@@ -35,7 +35,7 @@ namespace SongCensor.UI.BSML
         }
 
         private CustomListTableData.CustomCellInfo getCustomCellInfo(BeatmapLevel map) =>
-            new CustomListTableData.CustomCellInfo(map.songName, map.songAuthorName);
+            new CustomListTableData.CustomCellInfo(map.songName);
         
         public void Initialize()
         {
@@ -60,6 +60,7 @@ namespace SongCensor.UI.BSML
             _songPreviewPlayer.CrossfadeToDefault();
             
             _config.CensoredSongs.Add(_selectedLevel.levelID);
+            _addButton.interactable = false;
             reloadCensorListData();
         }
 
@@ -90,7 +91,7 @@ namespace SongCensor.UI.BSML
         {
             _selectedLevel = level;
 
-            _addButton.interactable = true;
+            _addButton.interactable = !_config.CensoredSongs.Contains(level.levelID);
         }
 
         public void Dispose()

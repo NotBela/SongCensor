@@ -2,7 +2,7 @@
     xsi:noNamespaceSchemaLocation='https://monkeymanboy.github.io/BSML-Docs/BSMLSchema.xsd'>
     <vertical>
         <vertical bg="panel-top">
-            <list align-to-center="true" select-cell="censorListCell" id="censorList" visible-cells="7" show-scrollbar="true"/>
+            <list align-to-center="true" select-cell="censorListCell" id="censorList" visible-cells="7" show-scrollbar="true" list-style="Simple"/>
         </vertical>
         <horizontal spacing="5">
             <button id="addButton" on-click="addButtonOnClick" text="Add Selected" interactable="false"/>
