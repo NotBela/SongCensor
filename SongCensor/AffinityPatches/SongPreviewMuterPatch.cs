@@ -18,7 +18,7 @@ namespace SongCensor.AffinityPatches
         [AffinityPatch(typeof(LevelCollectionViewController), nameof(LevelCollectionViewController.SongPlayerCrossfadeToLevel))]
         private bool PrefixPatch(LevelCollectionViewController __instance, BeatmapLevel level)
         {
-            if (!_config.CensoredSongs[level.levelID].censorSong) return true;
+            if (!_config.CensoredSongs.Contains(level.levelID)) return true;
 
             __instance._songPreviewPlayer.CrossfadeToDefault();
             return false;

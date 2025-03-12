@@ -17,7 +17,6 @@ namespace SongCensor.Installers
             
             Container.BindInterfacesAndSelfTo<SongPreviewMuterPatch>().AsSingle();
             Container.BindInterfacesAndSelfTo<CensorListViewController>().FromNewComponentAsViewController().AsSingle();
-            Container.BindInterfacesAndSelfTo<CoverArtBlur>().AsSingle();
         }
     }
 }

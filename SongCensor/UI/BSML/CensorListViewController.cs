@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using BeatSaberMarkupLanguage.Attributes;
@@ -17,179 +18,87 @@ namespace SongCensor.UI.BSML
     public class CensorListViewController : BSMLAutomaticViewController, IInitializable, IDisposable
     {
         [Inject] private readonly PluginConfig _config = null;
-        
-        [UIParams] private readonly BSMLParserParams _parserParams = null;
+        [Inject] private readonly LevelCollectionViewController _levelCollectionViewController = null;
+        [Inject] private readonly SongPreviewPlayer _songPreviewPlayer = null;
 
-        [UIComponent("censorList")] 
-        private readonly CustomListTableData _censorList = null;
-        
-        [UIComponent("mapListCustomMapList")]
-        private readonly CustomListTableData _mapList = null;
-        
-        [UIComponent("chosenMapToFilter")]
-        private readonly CustomListTableData _chosenMapToFilter = null;
-        
-        [UIComponent("removeButton")]
-        private readonly Button _removeButton = null;
-        
-        [UIComponent("editButton")]
-        private readonly Button _editButton = null;
-        
-        private KeyValuePair<string, (bool, bool)> _currentlySelectedMap = new KeyValuePair<string, (bool, bool)>(String.Empty, (true, false));
+        [UIComponent("addButton")] private readonly Button _addButton = null;
+        [UIComponent("removeButton")] private readonly Button _removeButton = null;
+        [UIComponent("censorList")] private readonly CustomListTableData _censorList = null;
 
-        private int _currentlySelectedCensoredMapIndex = -1;
-        
-        [UIValue("editModalCensorSongValue")]
-        private bool _censorSongValue
+        private BeatmapLevel _selectedLevel;
+        private int _selectedCensorListCell;
+
+        private void reloadCensorListData()
         {
-            get => _currentlySelectedMap.Value.Item1;
-            set => _currentlySelectedMap = new KeyValuePair<string, (bool, bool)>(
-                _currentlySelectedMap.Key,
-                (value, _currentlySelectedMap.Value.Item2)
-            );
-        }
-        
-        [UIValue("editModalCensorCoverArtValue")]
-        private bool _censorCoverArtValue
-        {
-            get => _currentlySelectedMap.Value.Item2;
-            set => _currentlySelectedMap = new KeyValuePair<string, (bool, bool)>(
-                _currentlySelectedMap.Key,
-                (_currentlySelectedMap.Value.Item1, value)
-            );
-        }
-
-        [UIValue("#post-parse")]
-        void PostParse()
-        {
-            _mapList.Data = Loader.CustomLevels.Values.Select(GetCustomCellInfo).ToList();
-            _mapList.TableView.ReloadData();
-
-            _editButton.interactable = false;
-            _removeButton.interactable = false;
-            
-            ReloadCensorList();
-            _chosenMapToFilter.Data = new List<CustomListTableData.CustomCellInfo>()
-            {
-                new CustomListTableData.CustomCellInfo("Select to choose map")
-            };
-            _chosenMapToFilter.TableView.ReloadData();
-        }
-
-        [UIAction("removeButtonOnClick")]
-        private void RemoveButtonOnClick()
-        {
-            if (_currentlySelectedCensoredMapIndex == -1 || 
-                _config.CensoredSongs.Count >= _currentlySelectedCensoredMapIndex)
-                return;
-            
-            _censorList.TableView.ClearSelection();
-            _config.CensoredSongs.Remove(_config.CensoredSongs.ElementAt(_currentlySelectedCensoredMapIndex).Key);
-            _censorList.Data.RemoveAt(_currentlySelectedCensoredMapIndex);
+            _censorList.Data = _config.CensoredSongs.Select(i => getCustomCellInfo(Loader.GetLevelById(i))).ToList();
             _censorList.TableView.ReloadData();
-            
-            ResetCensorListSelection();
         }
 
-        [UIAction("censorListCell")]
-        private void censorListCellOnSelect(TableView tableView, int cell)
+        private CustomListTableData.CustomCellInfo getCustomCellInfo(BeatmapLevel map) =>
+            new CustomListTableData.CustomCellInfo(map.songName, map.songAuthorName);
+        
+        public void Initialize()
         {
-            _currentlySelectedCensoredMapIndex = cell;
+            _levelCollectionViewController.didSelectLevelEvent += DidSelectLevelEvent;
+            _levelCollectionViewController.didSelectHeaderEvent += DidSelectHeaderEvent;
+            Loader.SongsLoadedEvent += OnSongLoad;
             
-            _editButton.interactable = true;
-            _removeButton.interactable = true;
+            GameplaySetup.Instance.AddTab("SongCensor", "SongCensor.UI.BSML.CensorListView.bsml", this);
+        }
+
+        private void OnSongLoad(Loader arg1, ConcurrentDictionary<string, BeatmapLevel> arg2)
+        {
+            reloadCensorListData();
         }
 
         [UIAction("addButtonOnClick")]
         private void addButtonOnClick()
         {
-            _chosenMapToFilter.Data = new List<CustomListTableData.CustomCellInfo>()
-            {
-                new CustomListTableData.CustomCellInfo("Select to choose map")
-            };
-            _chosenMapToFilter.TableView.ReloadData();
-            _parserParams.EmitEvent("editModalShow");
-            NotifyPropertyChanged(null);
-        }
-
-        [UIAction("editButtonOnClick")]
-        private void editButtonOnClick()
-        {
-            var mapSelected =
-                Loader.GetLevelById(_config.CensoredSongs.ElementAt(_currentlySelectedCensoredMapIndex).Key);
-
-            _chosenMapToFilter.Data = new List<CustomListTableData.CustomCellInfo>()
-            {
-                new CustomListTableData.CustomCellInfo(mapSelected?.songName, mapSelected?.songAuthorName)
-            };
-            _chosenMapToFilter.TableView.ReloadData();
-            _parserParams.EmitEvent("editModalShow");
-        }
-
-        [UIAction("onChosenMapToFilterSelected")]
-        private void onChosenMapToFilterSelected(TableView tableView, int cell)
-        {
-            tableView.ClearSelection();
-            _parserParams.EmitEvent("mapListModalShow");
-        }
-
-        [UIAction("onMapListCellSelect")]
-        private void onMapListCellSelect(TableView tableView, int cell)
-        {
-            var beatmap = Loader.CustomLevels.ElementAt(cell).Value;
-            tableView.ClearSelection();
-            _currentlySelectedMap = new KeyValuePair<string, (bool, bool)>(beatmap.levelID, _currentlySelectedMap.Value);
-            _chosenMapToFilter.Data = new List<CustomListTableData.CustomCellInfo>()
-            {
-                GetCustomCellInfo(beatmap)
-            };
-            _chosenMapToFilter.TableView.ReloadData();
-            _parserParams.EmitEvent("mapListModalHide");
-        }
-        
-        [UIAction("editModalCloseButtonOnClick")]
-        private void editModalCloseButtonOnClick() => _parserParams.EmitEvent("editModalHide");
-
-        [UIAction("editModalSaveButtonOnClick")]
-        private void editModalSaveButtonOnClick()
-        {
-            if (_config.CensoredSongs.ContainsKey(_currentlySelectedMap.Key))
-                _config.CensoredSongs.Remove(_currentlySelectedMap.Key);
+            if (_selectedLevel == null) return;
+            if (_config.CensoredSongs.Contains(_selectedLevel.levelID)) return;
             
-            _config.CensoredSongs.Add(_currentlySelectedMap.Key, _currentlySelectedMap.Value);
-            _currentlySelectedMap = new KeyValuePair<string, (bool, bool)>(String.Empty, (true, false));
+            _songPreviewPlayer.CrossfadeToDefault();
             
-            ResetCensorListSelection();
-            ReloadCensorList();
-            NotifyPropertyChanged(null);
+            _config.CensoredSongs.Add(_selectedLevel.levelID);
+            reloadCensorListData();
         }
 
-        private void ResetCensorListSelection()
+        [UIAction("removeButtonOnClick")]
+        private void removeButtonOnClick()
         {
-            _editButton.interactable = false;
             _removeButton.interactable = false;
-            _currentlySelectedCensoredMapIndex = -1;
-            
             _censorList.TableView.ClearSelection();
+            
+            _config.CensoredSongs.RemoveAt(_selectedCensorListCell);
+            reloadCensorListData();
         }
-        
-        private CustomListTableData.CustomCellInfo GetCustomCellInfo(BeatmapLevel level) => new CustomListTableData.CustomCellInfo(level.songName, level.songAuthorName);
 
-        private void ReloadCensorList()
+        [UIAction("censorListCell")]
+        private void onCensorListCellSelect(TableView _, int cellIdx)
         {
-            _censorList.Data = _config.CensoredSongs.Keys.Select(i => GetCustomCellInfo(Loader.GetLevelById(i)))
-                .ToList();
-            _censorList.TableView.ReloadData();
+            _removeButton.interactable = true;
+
+            _selectedCensorListCell = cellIdx;
         }
-        
-        
-        public void Initialize()
+
+        private void DidSelectHeaderEvent(LevelCollectionViewController _)
         {
-            GameplaySetup.Instance.AddTab("SongCensor", "SongCensor.UI.BSML.CensorListView.bsml", this);
+            _addButton.interactable = false;
+        }
+
+        private void DidSelectLevelEvent(LevelCollectionViewController _, BeatmapLevel level)
+        {
+            _selectedLevel = level;
+
+            _addButton.interactable = true;
         }
 
         public void Dispose()
         {
+            _levelCollectionViewController.didSelectLevelEvent -= DidSelectLevelEvent;
+            _levelCollectionViewController.didSelectHeaderEvent -= DidSelectHeaderEvent;
+            Loader.SongsLoadedEvent -= OnSongLoad;
+            
             GameplaySetup.Instance.RemoveTab("SongCensor");
         }
     }

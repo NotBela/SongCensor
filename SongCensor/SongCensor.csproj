@@ -68,6 +68,10 @@
             <Private>false</Private>
         </Reference>
         <Reference Include="System.Data.DataSetExtensions"/>
+        <Reference Include="Unity.Mathematics">
+            <HintPath>$(BeatSaberDir)\Beat Saber_Data\Managed\Unity.Mathematics.dll</HintPath>
+            <Private>false</Private>
+        </Reference>
         <Reference Include="Unity.TextMeshPro">
             <HintPath>$(BeatSaberDir)\Beat Saber_Data\Managed\Unity.TextMeshPro.dll</HintPath>
             <Private>False</Private>
