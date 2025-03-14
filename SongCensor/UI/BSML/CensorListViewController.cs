@@ -21,29 +21,29 @@ namespace SongCensor.UI.BSML
         [Inject] private readonly LevelCollectionViewController _levelCollectionViewController = null;
         [Inject] private readonly SongPreviewPlayer _songPreviewPlayer = null;
 
+        [UIParams] private readonly BSMLParserParams _parserParams = null;
+
         [UIComponent("addButton")] private readonly Button _addButton = null;
         [UIComponent("removeButton")] private readonly Button _removeButton = null;
-        [UIComponent("censorList")] private readonly CustomListTableData _censorList = null;
+        [UIComponent("censorList")] private readonly CustomCellListTableData _censorList = null;
 
         private BeatmapLevel _selectedLevel;
         private int _selectedCensorListCell;
 
+        private BeatmapLevel _lastEditedListCell = null;
+
+        #region CensorList
         private void reloadCensorListData()
         {
-            _censorList.Data = _config.CensoredSongs.Select(i => getCustomCellInfo(Loader.GetLevelById(i))).ToList();
-            _censorList.TableView.ReloadData();
-        }
+            var list = _config.CensoredSongs.Select(i =>
+            {
+                var beatmap = Loader.GetLevelById(i.Key);
 
-        private CustomListTableData.CustomCellInfo getCustomCellInfo(BeatmapLevel map) =>
-            new CustomListTableData.CustomCellInfo(map.songName);
-        
-        public void Initialize()
-        {
-            _levelCollectionViewController.didSelectLevelEvent += DidSelectLevelEvent;
-            _levelCollectionViewController.didSelectHeaderEvent += DidSelectHeaderEvent;
-            Loader.SongsLoadedEvent += OnSongLoad;
-            
-            GameplaySetup.Instance.AddTab("SongCensor", "SongCensor.UI.BSML.CensorListView.bsml", this);
+                return new SongListElement(beatmap);
+            }).ToList();
+            _censorList.Data = list.Cast<object>().ToList();
+
+            _censorList.TableView.ReloadData();
         }
 
         private void OnSongLoad(Loader arg1, ConcurrentDictionary<string, BeatmapLevel> arg2)
@@ -55,11 +55,11 @@ namespace SongCensor.UI.BSML
         private void addButtonOnClick()
         {
             if (_selectedLevel == null) return;
-            if (_config.CensoredSongs.Contains(_selectedLevel.levelID)) return;
+            if (_config.CensoredSongs.ContainsKey(_selectedLevel.levelID)) return;
             
             _songPreviewPlayer.CrossfadeToDefault();
             
-            _config.CensoredSongs.Add(_selectedLevel.levelID);
+            _config.CensoredSongs.Add(_selectedLevel.levelID, new MapSettings(true, false));
             _addButton.interactable = false;
             reloadCensorListData();
         }
@@ -70,7 +70,7 @@ namespace SongCensor.UI.BSML
             _removeButton.interactable = false;
             _censorList.TableView.ClearSelection();
             
-            _config.CensoredSongs.RemoveAt(_selectedCensorListCell);
+            _config.CensoredSongs.Remove(_config.CensoredSongs.ElementAt(_selectedCensorListCell).Key);
             reloadCensorListData();
         }
 
@@ -81,6 +81,51 @@ namespace SongCensor.UI.BSML
 
             _selectedCensorListCell = cellIdx;
         }
+        
+        #endregion
+
+        #region EditModal
+        public void OpenEditMenu(BeatmapLevel beatmapLevel)
+        {
+            _lastEditedListCell = beatmapLevel;
+            
+            _parserParams.EmitEvent("editModalShow");
+            NotifyPropertyChanged();
+        }
+        
+        [UIValue("censorSongValue")]
+        private bool censorSongBool
+        {
+            get => _lastEditedListCell != null && _config.CensoredSongs[_lastEditedListCell.levelID].CensorSong;
+            set
+            {
+                if (!_config.CensoredSongs.TryGetValue(_lastEditedListCell.levelID, out var song))
+                {
+                    _config.CensoredSongs.Add(_lastEditedListCell.levelID, new MapSettings(value, false));
+                    return;
+                }
+                
+                song.CensorSong = value;
+            }
+        }
+        
+        [UIValue("censorCoverArtValue")]
+        private bool censorCoverArtBool
+        {
+            get => _lastEditedListCell != null && _config.CensoredSongs[_lastEditedListCell.levelID].CensorCoverArt;
+            set
+            {
+                if (!_config.CensoredSongs.TryGetValue(_lastEditedListCell.levelID, out var song))
+                {
+                    _config.CensoredSongs.Add(_lastEditedListCell.levelID, new MapSettings(true, value));
+                    return;
+                }
+                
+                song.CensorCoverArt = value;
+            }
+        }
+
+        #endregion
 
         private void DidSelectHeaderEvent(LevelCollectionViewController _)
         {
@@ -91,7 +136,16 @@ namespace SongCensor.UI.BSML
         {
             _selectedLevel = level;
 
-            _addButton.interactable = !_config.CensoredSongs.Contains(level.levelID);
+            _addButton.interactable = !_config.CensoredSongs.ContainsKey(level.levelID);
+        }
+        
+        public void Initialize()
+        {
+            _levelCollectionViewController.didSelectLevelEvent += DidSelectLevelEvent;
+            _levelCollectionViewController.didSelectHeaderEvent += DidSelectHeaderEvent;
+            Loader.SongsLoadedEvent += OnSongLoad;
+            
+            GameplaySetup.Instance.AddTab("SongCensor", "SongCensor.UI.BSML.CensorListView.bsml", this);
         }
 
         public void Dispose()

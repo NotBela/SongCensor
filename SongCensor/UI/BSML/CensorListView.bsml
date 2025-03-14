@@ -2,11 +2,28 @@
     xsi:noNamespaceSchemaLocation='https://monkeymanboy.github.io/BSML-Docs/BSMLSchema.xsd'>
     <vertical>
         <vertical bg="round-rect-panel">
-            <list align-to-center="true" select-cell="censorListCell" id="censorList" visible-cells="7" show-scrollbar="true" list-style="Simple"/>
+            <custom-list align-to-center="true" select-cell="censorListCell" id="censorList" visible-cells="7" show-scrollbar="true">
+                <horizontal>
+                    <vertical>
+                        <text text="~songName" word-wrapping="false"/>
+                        <text color="#CCC" text="~songArtist" word-wrapping="false"/>
+                    </vertical>
+                    <vertical child-align="MiddleRight">
+                        <button on-click="editButtonOnClick" text="Edit"/>
+                    </vertical>
+                </horizontal>
+            </custom-list>
         </vertical>
         <horizontal spacing="5">
             <button id="addButton" on-click="addButtonOnClick" text="Add Selected" interactable="false"/>
             <button id="removeButton" on-click="removeButtonOnClick" text="Remove" interactable="false"/>
         </horizontal>
     </vertical>
+    
+    <modal hide-event="editModalHide" move-to-center="true" show-event="editModalShow" click-off-closes="true" size-delta-x="100" size-delta-y="50">
+        <vertical>
+            <bool-setting text="Censor Song" value="censorSongValue" bind-value="true" apply-on-change="true"/>
+            <bool-setting text="Censor Cover Art" value="censorCoverArtValue" bind-value="true" apply-on-change="true"/>
+        </vertical>
+    </modal>
 </bg>

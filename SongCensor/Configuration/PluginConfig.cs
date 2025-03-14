@@ -14,7 +14,20 @@ namespace SongCensor.Configuration
     {
         public virtual bool Enabled { get; set; } = true;
         
-        [UseConverter(typeof(ListConverter<string>))]
-        public virtual List<string> CensoredSongs { get; set; } = new List<string>();
+        [NonNullable]
+        [UseConverter(typeof(DictionaryConverter<Dictionary<string, object>>))]
+        public virtual Dictionary<string, MapSettings> CensoredSongs { get; set; } = new Dictionary<string, MapSettings>();
+    }
+
+    public class MapSettings
+    {
+        public bool CensorSong { get; set; }
+        public bool CensorCoverArt { get; set; }
+        
+        public MapSettings(bool censorSong, bool censorCoverArt)
+        {
+            this.CensorSong = censorSong;
+            this.CensorCoverArt = censorCoverArt;
+        }
     }
 }
