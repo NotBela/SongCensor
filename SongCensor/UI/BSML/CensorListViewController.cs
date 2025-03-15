@@ -33,6 +33,19 @@ namespace SongCensor.UI.BSML
         private BeatmapLevel _lastEditedListCell = null;
 
         #region CensorList
+        
+        private void DidSelectHeaderEvent(LevelCollectionViewController _)
+        {
+            _addButton.interactable = false;
+        }
+
+        private void DidSelectLevelEvent(LevelCollectionViewController _, BeatmapLevel level)
+        {
+            _selectedLevel = level;
+
+            _addButton.interactable = !_config.CensoredSongs.ContainsKey(level.levelID);
+        }
+        
         private void reloadCensorListData()
         {
             var list = _config.CensoredSongs.Select(i =>
@@ -126,18 +139,6 @@ namespace SongCensor.UI.BSML
         }
 
         #endregion
-
-        private void DidSelectHeaderEvent(LevelCollectionViewController _)
-        {
-            _addButton.interactable = false;
-        }
-
-        private void DidSelectLevelEvent(LevelCollectionViewController _, BeatmapLevel level)
-        {
-            _selectedLevel = level;
-
-            _addButton.interactable = !_config.CensoredSongs.ContainsKey(level.levelID);
-        }
         
         public void Initialize()
         {
