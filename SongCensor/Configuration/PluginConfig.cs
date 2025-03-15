@@ -15,7 +15,7 @@ namespace SongCensor.Configuration
         public virtual bool Enabled { get; set; } = true;
         
         [NonNullable]
-        [UseConverter(typeof(DictionaryConverter<Dictionary<string, object>>))]
+        [UseConverter(typeof(DictionaryConverter<MapSettings>))]
         public virtual Dictionary<string, MapSettings> CensoredSongs { get; set; } = new Dictionary<string, MapSettings>();
     }
 
@@ -28,6 +28,13 @@ namespace SongCensor.Configuration
         {
             this.CensorSong = censorSong;
             this.CensorCoverArt = censorCoverArt;
+        }
+        // bsipa requires a parameterless constructor to be present in order to serialize to a config file
+        // do not remove!!!!
+        public MapSettings()
+        {
+            this.CensorSong = true;
+            this.CensorCoverArt = false;
         }
     }
 }
