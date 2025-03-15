@@ -30,5 +30,11 @@ namespace SongCensor.UI.BSML
         {
             _censorListViewController.OpenEditMenu(ParentBeatmap);
         }
+
+        [UIAction("removeButtonOnClick")]
+        private void removeButtonOnClick()
+        {
+            
+        }
     }
 }

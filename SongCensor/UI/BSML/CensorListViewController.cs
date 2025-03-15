@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using BeatSaberMarkupLanguage.Attributes;
 using BeatSaberMarkupLanguage.Components;
+using BeatSaberMarkupLanguage.Components.Settings;
 using BeatSaberMarkupLanguage.GameplaySetup;
 using BeatSaberMarkupLanguage.Parser;
 using BeatSaberMarkupLanguage.ViewControllers;
@@ -12,6 +13,7 @@ using SongCensor.Configuration;
 using SongCore;
 using UnityEngine.UI;
 using Zenject;
+using Toggle = UnityEngine.UIElements.Toggle;
 
 namespace SongCensor.UI.BSML
 {
@@ -24,7 +26,6 @@ namespace SongCensor.UI.BSML
         [UIParams] private readonly BSMLParserParams _parserParams = null;
 
         [UIComponent("addButton")] private readonly Button _addButton = null;
-        [UIComponent("removeButton")] private readonly Button _removeButton = null;
         [UIComponent("censorList")] private readonly CustomCellListTableData _censorList = null;
 
         private BeatmapLevel _selectedLevel;
@@ -77,33 +78,27 @@ namespace SongCensor.UI.BSML
             reloadCensorListData();
         }
 
-        [UIAction("removeButtonOnClick")]
-        private void removeButtonOnClick()
-        {
-            _removeButton.interactable = false;
-            _censorList.TableView.ClearSelection();
-            
-            _config.CensoredSongs.Remove(_config.CensoredSongs.ElementAt(_selectedCensorListCell).Key);
-            reloadCensorListData();
-        }
-
         [UIAction("censorListCell")]
         private void onCensorListCellSelect(TableView _, int cellIdx)
         {
-            _removeButton.interactable = true;
-
             _selectedCensorListCell = cellIdx;
         }
         
         #endregion
 
         #region EditModal
+
+        [UIComponent("censorCoverArtToggle")] private readonly ToggleSetting _censorCoverArtToggle = null;
+        [UIComponent("censorSongToggle")] private readonly ToggleSetting _censorSongToggle = null;
+        
         public void OpenEditMenu(BeatmapLevel beatmapLevel)
         {
             _lastEditedListCell = beatmapLevel;
-            
+
             _parserParams.EmitEvent("editModalShow");
-            NotifyPropertyChanged();
+            
+            _censorCoverArtToggle.Value = _config.CensoredSongs[_lastEditedListCell.levelID].CensorCoverArt;
+            _censorSongToggle.Value = _config.CensoredSongs[_lastEditedListCell.levelID].CensorSong;
         }
         
         [UIValue("censorSongValue")]

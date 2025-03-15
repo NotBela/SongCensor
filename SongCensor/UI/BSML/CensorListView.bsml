@@ -3,27 +3,29 @@
     <vertical>
         <vertical bg="round-rect-panel">
             <custom-list align-to-center="true" select-cell="censorListCell" id="censorList" visible-cells="7" show-scrollbar="true">
-                <horizontal>
-                    <vertical>
-                        <text text="~songName" word-wrapping="false"/>
-                        <text color="#CCC" text="~songArtist" word-wrapping="false"/>
+                <horizontal horizontal-fit="Unconstrained" bg="panel-fade-gradient" pad="3">
+                    <vertical spacing="-1" horizontal-fit="Unconstrained">
+                        <text text="~songName" word-wrapping="false" align="Left"/>
+                        <text color="#CCC" text="~songArtist" word-wrapping="false" align="Left"/>
                     </vertical>
-                    <vertical child-align="MiddleRight">
-                        <button on-click="editButtonOnClick" text="Edit"/>
+                    <vertical horizontal-fit="Unconstrained" child-control-width="false" child-align="MiddleRight">
+                        <horizontal horizontal-fit="PreferredSize" child-align="MiddleRight" child-control-width="false" pref-width="18">
+                            <button on-click="editButtonOnClick" text="Edit" horizontal-fit="PreferredSize" pref-width="12"/>
+                            <button on-click="removeButtonOnClick" text="X" horizontal-fit="PreferredSize" font-color="red" pref-width="5"/>
+                        </horizontal>
                     </vertical>
                 </horizontal>
             </custom-list>
         </vertical>
         <horizontal spacing="5">
             <button id="addButton" on-click="addButtonOnClick" text="Add Selected" interactable="false"/>
-            <button id="removeButton" on-click="removeButtonOnClick" text="Remove" interactable="false"/>
         </horizontal>
     </vertical>
     
     <modal hide-event="editModalHide" move-to-center="true" show-event="editModalShow" click-off-closes="true" size-delta-x="100" size-delta-y="50">
         <vertical>
-            <bool-setting text="Censor Song" value="censorSongValue" bind-value="true" apply-on-change="true"/>
-            <bool-setting text="Censor Cover Art" value="censorCoverArtValue" bind-value="true" apply-on-change="true"/>
+            <bool-setting text="Censor Song" id="censorSongToggle" value="censorSongValue" bind-value="true" apply-on-change="true"/>
+            <bool-setting text="Censor Cover Art" id="censorCoverArtToggle" value="censorCoverArtValue" bind-value="true" apply-on-change="true"/>
         </vertical>
     </modal>
 </bg>
