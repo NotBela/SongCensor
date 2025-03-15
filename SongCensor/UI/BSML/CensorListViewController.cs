@@ -60,6 +60,12 @@ namespace SongCensor.UI.BSML
             _censorList.TableView.ReloadData();
         }
 
+        public void RemoveEntryFromList(string levelId)
+        {
+            _config.CensoredSongs.Remove(levelId);
+            reloadCensorListData();
+        }
+
         private void OnSongLoad(Loader arg1, ConcurrentDictionary<string, BeatmapLevel> arg2)
         {
             reloadCensorListData();

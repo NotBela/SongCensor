@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using BeatSaberMarkupLanguage.Attributes;
+using SongCensor.Configuration;
 using TMPro;
 using UnityEngine;
 using Zenject;
@@ -34,7 +35,7 @@ namespace SongCensor.UI.BSML
         [UIAction("removeButtonOnClick")]
         private void removeButtonOnClick()
         {
-            
+            _censorListViewController.RemoveEntryFromList(ParentBeatmap.levelID);
         }
     }
 }

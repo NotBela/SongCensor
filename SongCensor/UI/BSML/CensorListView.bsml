@@ -11,7 +11,7 @@
                     <vertical horizontal-fit="Unconstrained" child-control-width="false" child-align="MiddleRight">
                         <horizontal horizontal-fit="PreferredSize" child-align="MiddleRight" child-control-width="false" pref-width="18">
                             <button on-click="editButtonOnClick" text="Edit" horizontal-fit="PreferredSize" pref-width="12"/>
-                            <button on-click="removeButtonOnClick" text="X" horizontal-fit="PreferredSize" font-color="red" pref-width="5"/>
+                            <button on-click="removeButtonOnClick" text="X" horizontal-fit="PreferredSize" pref-width="5"/>
                         </horizontal>
                     </vertical>
                 </horizontal>
