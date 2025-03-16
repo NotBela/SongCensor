@@ -1,6 +1,7 @@
 ﻿using SiraUtil.Affinity;
 using SongCensor.Censor;
 using SongCensor.Configuration;
+using SongCore;
 using Zenject;
 
 namespace SongCensor.AffinityPatches
@@ -16,7 +17,7 @@ namespace SongCensor.AffinityPatches
             if (!_config.CensoredSongs.ContainsKey(__instance._beatmapLevel.levelID)) return;
             if (!_config.CensoredSongs[__instance._beatmapLevel.levelID].CensorCoverArt) return;
             
-            __instance._songArtworkImageView.sprite = __instance._defaultArtworkImage;
+            __instance._songArtworkImageView.sprite = Loader.defaultCoverImage;
         }
     }
 }
