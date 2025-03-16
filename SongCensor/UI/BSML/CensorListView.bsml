@@ -3,7 +3,7 @@
     <vertical>
         <vertical bg="round-rect-panel">
             <custom-list align-to-center="true" select-cell="censorListCell" id="censorList" visible-cells="7" show-scrollbar="true">
-                <horizontal horizontal-fit="Unconstrained" bg="panel-fade-gradient" pad="3">
+                <horizontal horizontal-fit="Unconstrained" pad="3">
                     <vertical spacing="-1" horizontal-fit="Unconstrained">
                         <text text="~songName" word-wrapping="false" align="Left"/>
                         <text color="#CCC" text="~songArtist" word-wrapping="false" align="Left"/>
