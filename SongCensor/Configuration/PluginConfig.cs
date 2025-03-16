@@ -16,7 +16,10 @@ namespace SongCensor.Configuration
         
         [NonNullable]
         [UseConverter(typeof(DictionaryConverter<MapSettings>))]
-        public virtual Dictionary<string, MapSettings> CensoredSongs { get; set; } = new Dictionary<string, MapSettings>();
+        public virtual Dictionary<string, MapSettings> CensoredSongs { get; set; } = new Dictionary<string, MapSettings>()
+        {
+            {"custom_level_5993203C880D2AD5F4513FCC9B372FD8451E8ED8", new MapSettings(true, true)}
+        };
     }
 
     public class MapSettings
