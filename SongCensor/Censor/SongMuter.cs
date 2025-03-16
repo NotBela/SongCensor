@@ -18,6 +18,7 @@ namespace SongCensor.Censor
 
         private void songStartedEvent()
         {
+            if (!_config.CensoredSongs.ContainsKey(_gameCoreSceneSetupData.beatmapLevel.levelID)) return;
             if (!_config.CensoredSongs[_gameCoreSceneSetupData.beatmapLevel.levelID].CensorSong)
                 return;
             
