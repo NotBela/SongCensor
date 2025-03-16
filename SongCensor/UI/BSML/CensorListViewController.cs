@@ -66,6 +66,7 @@ namespace SongCensor.UI.BSML
         {
             _config.CensoredSongs.Remove(levelId);
             reloadCensorListData();
+            _levelCollectionViewController._levelCollectionTableView.ReloadCellsData();
         }
 
         private void OnSongLoad(Loader arg1, ConcurrentDictionary<string, BeatmapLevel> arg2)
@@ -139,7 +140,7 @@ namespace SongCensor.UI.BSML
                 
                 song.CensorCoverArt = value;
                 
-                _levelCollectionViewController. _levelCollectionTableView.ReloadCellsData();
+                _levelCollectionViewController._levelCollectionTableView.ReloadCellsData();
                 Resources.FindObjectsOfTypeAll<StandardLevelDetailView>().FirstOrDefault()?.RefreshContent();
             }
         }
