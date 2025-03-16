@@ -11,6 +11,8 @@ using BeatSaberMarkupLanguage.ViewControllers;
 using HMUI;
 using SongCensor.Configuration;
 using SongCore;
+using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 using Toggle = UnityEngine.UIElements.Toggle;
@@ -136,7 +138,9 @@ namespace SongCensor.UI.BSML
                 }
                 
                 song.CensorCoverArt = value;
+                
                 _levelCollectionViewController. _levelCollectionTableView.ReloadCellsData();
+                Resources.FindObjectsOfTypeAll<StandardLevelDetailView>().FirstOrDefault()?.RefreshContent();
             }
         }
 
