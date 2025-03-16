@@ -136,6 +136,7 @@ namespace SongCensor.UI.BSML
                 }
                 
                 song.CensorCoverArt = value;
+                _levelCollectionViewController. _levelCollectionTableView.ReloadCellsData();
             }
         }
 
