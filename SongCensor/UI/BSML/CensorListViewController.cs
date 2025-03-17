@@ -31,7 +31,6 @@ namespace SongCensor.UI.BSML
         [UIComponent("censorList")] private readonly CustomCellListTableData _censorList = null;
 
         private BeatmapLevel _selectedLevel;
-        private int _selectedCensorListCell;
 
         private BeatmapLevel _lastEditedListCell = null;
 
@@ -83,12 +82,6 @@ namespace SongCensor.UI.BSML
             _config.CensoredSongs.Add(_selectedLevel.levelID, new MapSettings(true, false));
             _addButton.interactable = false;
             reloadCensorListData();
-        }
-
-        [UIAction("censorListCell")]
-        private void onCensorListCellSelect(TableView _, int cellIdx)
-        {
-            _selectedCensorListCell = cellIdx;
         }
         
         #endregion

@@ -2,7 +2,7 @@
     xsi:noNamespaceSchemaLocation='https://monkeymanboy.github.io/BSML-Docs/BSMLSchema.xsd'>
     <vertical>
         <vertical bg="round-rect-panel">
-            <custom-list align-to-center="true" select-cell="censorListCell" id="censorList" visible-cells="7" show-scrollbar="true">
+            <custom-list align-to-center="true" id="censorList" visible-cells="7" show-scrollbar="true">
                 <horizontal horizontal-fit="Unconstrained" pad="3">
                     <vertical spacing="-1" horizontal-fit="Unconstrained">
                         <text text="~songName" word-wrapping="false" align="Left"/>
