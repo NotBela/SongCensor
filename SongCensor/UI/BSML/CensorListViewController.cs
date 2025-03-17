@@ -51,13 +51,12 @@ namespace SongCensor.UI.BSML
         
         private void reloadCensorListData()
         {
-            var list = _config.CensoredSongs.Select(i =>
-            {
-                var beatmap = Loader.GetLevelById(i.Key);
-
-                return new SongListElement(beatmap);
-            }).ToList();
-            _censorList.Data = list.Cast<object>().ToList();
+            _censorList.Data = (
+                from level 
+                in _config.CensoredSongs 
+                where Loader.GetLevelById(level.Key) != null 
+                select new SongListElement(Loader.GetLevelById(level.Key)))
+                .Cast<object>().ToList();
 
             _censorList.TableView.ReloadData();
         }
