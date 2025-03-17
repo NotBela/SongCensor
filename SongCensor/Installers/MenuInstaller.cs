@@ -1,5 +1,4 @@
 ﻿using SongCensor.AffinityPatches;
-using SongCensor.Censor;
 using SongCensor.Configuration;
 using SongCensor.UI.BSML;
 using Zenject;

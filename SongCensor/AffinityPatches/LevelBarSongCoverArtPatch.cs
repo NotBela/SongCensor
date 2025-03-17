@@ -1,5 +1,4 @@
 ﻿using SiraUtil.Affinity;
-using SongCensor.Censor;
 using SongCensor.Configuration;
 using SongCore;
 using Zenject;

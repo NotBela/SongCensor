@@ -1,10 +1,4 @@
-﻿using System;
-using System.Linq;
-using IPA.Logging;
-using IPA.Utilities;
-using SiraUtil.Affinity;
-using SiraUtil.Logging;
-using SongCensor.Censor;
+﻿using SiraUtil.Affinity;
 using SongCensor.Configuration;
 using Zenject;
 

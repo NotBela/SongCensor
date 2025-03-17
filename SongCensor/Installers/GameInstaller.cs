@@ -1,6 +1,4 @@
-﻿using System.Runtime.InteropServices;
-using SongCensor.AffinityPatches;
-using SongCensor.Censor;
+﻿using SongCensor.AffinityPatches;
 using SongCensor.Configuration;
 using Zenject;
 
@@ -12,7 +10,7 @@ namespace SongCensor.Installers
         {
             if (!Container.Resolve<PluginConfig>().Enabled) return;
             
-            Container.BindInterfacesAndSelfTo<SongMuter>().AsSingle();
+            Container.BindInterfacesAndSelfTo<GameSongControllerPatch>().AsSingle();
             Container.BindInterfacesAndSelfTo<LevelBarSongCoverArtPatch>().AsSingle();
         }
     }
