@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Linq;
 using BeatSaberMarkupLanguage.Attributes;
 using BeatSaberMarkupLanguage.Components;
@@ -8,14 +7,11 @@ using BeatSaberMarkupLanguage.Components.Settings;
 using BeatSaberMarkupLanguage.GameplaySetup;
 using BeatSaberMarkupLanguage.Parser;
 using BeatSaberMarkupLanguage.ViewControllers;
-using HMUI;
 using SongCensor.Configuration;
 using SongCore;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
-using Toggle = UnityEngine.UIElements.Toggle;
 
 namespace SongCensor.UI.BSML
 {
@@ -36,10 +32,7 @@ namespace SongCensor.UI.BSML
 
         #region CensorList
         
-        private void DidSelectHeaderEvent(LevelCollectionViewController _)
-        {
-            _addButton.interactable = false;
-        }
+        private void DidSelectHeaderEvent(LevelCollectionViewController _) => _addButton.interactable = false;
 
         private void DidSelectLevelEvent(LevelCollectionViewController _, BeatmapLevel level)
         {
@@ -66,10 +59,7 @@ namespace SongCensor.UI.BSML
             _levelCollectionViewController._levelCollectionTableView.ReloadCellsData();
         }
 
-        private void OnSongLoad(Loader arg1, ConcurrentDictionary<string, BeatmapLevel> arg2)
-        {
-            reloadCensorListData();
-        }
+        private void OnSongLoad(Loader arg1, ConcurrentDictionary<string, BeatmapLevel> arg2) => reloadCensorListData();
 
         [UIAction("addButtonOnClick")]
         private void addButtonOnClick()
